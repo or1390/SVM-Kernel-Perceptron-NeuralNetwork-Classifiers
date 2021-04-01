@@ -42,7 +42,7 @@ class kernel_perceptron_multiclass:
     def train(self, X_train, y_train):
         self.X_train = X_train
         self.y_train = y_train
-        count_correct = 0
+
         n_samples, n_features = X_train.shape
         self.num_of_classifiers = self.min_num_bits_to_encode_number(self.num_of_classes)
 
@@ -64,27 +64,27 @@ class kernel_perceptron_multiclass:
         array_classifier_col3 = output[:,2]
         array_classifier_col4 = output[:,3]
 
-        kernel_binary1 = kernel_perceptron_binary(0.01, 1, 10, 1)
-        kernel_binary1.train(X_train, np.where(array_classifier_col1==0, -1, array_classifier_col1))
+        self.kernel_binary1 = kernel_perceptron_binary(0.01, 5, 100, 1)
+        self.kernel_binary1.train(X_train, np.where(array_classifier_col1==0, -1, array_classifier_col1))
         print("Finish 1")
-        kernel_binary2 = kernel_perceptron_binary(0.01, 1, 10, 1)
-        kernel_binary2.train(X_train, np.where(array_classifier_col2==0, -1, array_classifier_col2))
+        self.kernel_binary2 = kernel_perceptron_binary(0.01, 5, 100, 1)
+        self.kernel_binary2.train(X_train, np.where(array_classifier_col2==0, -1, array_classifier_col2))
         print("Finish 2")
-        kernel_binary3 = kernel_perceptron_binary(0.01, 1, 10, 1)
-        kernel_binary3.train(X_train,np.where(array_classifier_col3==0, -1, array_classifier_col3))
+        self.kernel_binary3 = kernel_perceptron_binary(0.01, 5, 100, 1)
+        self.kernel_binary3.train(X_train,np.where(array_classifier_col3==0, -1, array_classifier_col3))
         print("Finish 3")
-        kernel_binary4 = kernel_perceptron_binary(0.01, 1, 10, 1)
-        kernel_binary4.train(X_train,np.where(array_classifier_col4==0, -1, array_classifier_col4))
+        self.kernel_binary4 = kernel_perceptron_binary(0.01, 5, 100, 1)
+        self.kernel_binary4.train(X_train,np.where(array_classifier_col4==0, -1, array_classifier_col4))
 
-        for indx, x_i in enumerate(X_train):
-            y_label_1 = kernel_binary1.predict(x_i)
-         #   print(y_label_1)
-            y_label_2 = kernel_binary2.predict(x_i)
-         #   print(y_label_2)
-            y_label_3 =kernel_binary3.predict(x_i)
-          #  print(y_label_3)
-            y_label_4 = kernel_binary4.predict(x_i)
-           # print(y_label_4)
+
+
+    def predict(self, X_test):
+        y_predicted = []
+        for indx, x_i in enumerate(X_test):
+            y_label_1 = self.kernel_binary1.predict(x_i)
+            y_label_2 = self.kernel_binary2.predict(x_i)
+            y_label_3 = self.kernel_binary3.predict(x_i)
+            y_label_4 = self.kernel_binary4.predict(x_i)
             y_label = []
 
             y_label.append(y_label_1)
@@ -93,22 +93,23 @@ class kernel_perceptron_multiclass:
             y_label.append(y_label_4)
 
             binary_list = ''.join([str(elem) for elem in y_label])
-
-
             y_label = str.replace(binary_list, "-1"," 0")
-            no_space =re.sub(" +", " ", y_label)
+            binary_label = y_label.replace(" ", "")
+            y_multiclass = self.binaryToDecimal(binary_label)
+            # print("Y_multiclass " , y_multiclass)
 
-            print(y_label)
+            y_predicted.append(y_multiclass)
+        return y_predicted
 
-            y_multiclass = self.binaryToDecimal(y_label)
-            print(y_multiclass)
-
-        if(y_train[indx] == y_multiclass):
-           count_correct += count_correct
-        print(count_correct)
-
-
-
-
-
-
+    def score(self, X_test, y_test):
+        predictions = self.predict(X_test)
+        num_of_correct_prediction = 0
+        for indx, y_i in enumerate(y_test):
+            print("test y ", y_i)
+            print("pred is ", predictions[indx])
+            if predictions[indx] == y_i:
+                num_of_correct_prediction += 1
+        print("Correct pred", num_of_correct_prediction)
+        print("Length ", len(y_test))
+        accuracy = float(num_of_correct_prediction)/len(y_test)
+        return (accuracy)

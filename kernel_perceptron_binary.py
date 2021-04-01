@@ -36,11 +36,12 @@ class kernel_perceptron_binary:
 
     '''''
     def predict(self, sample):
-        sum = 0.0
+        sum_value = 0
         for i, x_i in enumerate (self.X_train):
             kernel = (self.a + self.b_learning_rate * np.dot(x_i, sample)) ** self.d_degree
-            sum += self.alpha[i] * kernel
-        if sum > 1:
+            sum_value += self.alpha[i] * kernel
+            #print(sum)
+        if sum_value > 1:
             return 1
         return -1
 
