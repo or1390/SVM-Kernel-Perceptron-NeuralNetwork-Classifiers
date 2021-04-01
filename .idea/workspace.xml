@@ -27,8 +27,53 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.main">
+    <configuration name="kernel_perceptron_multiclass (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="mini-project2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/kernel_perceptron_multiclass.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="kernel_perceptron_multiclass" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="mini-project2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/kernel_perceptron.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="mini-project2" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -54,6 +99,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.kernel_perceptron_multiclass (1)" />
+        <item itemvalue="Python.kernel_perceptron_multiclass" />
       </list>
     </recent_temporary>
   </component>
@@ -65,7 +112,10 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617059926187</updated>
-      <workItem from="1617059967029" duration="6138000" />
+      <workItem from="1617059967029" duration="6215000" />
+      <workItem from="1617074419663" duration="1156000" />
+      <workItem from="1617129760875" duration="20053000" />
+      <workItem from="1617214179583" duration="14485000" />
     </task>
     <servers />
   </component>
@@ -73,61 +123,42 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1557" height="222" key="GridCell.Tab.0.bottom" timestamp="1617065706108">
+    <state width="1557" height="222" key="GridCell.Tab.0.bottom" timestamp="1617245991227">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="222" key="GridCell.Tab.0.bottom/0.0.1600.860@0.0.1600.860" timestamp="1617065706108" />
-    <state width="1557" height="222" key="GridCell.Tab.0.center" timestamp="1617065706108">
+    <state width="1557" height="222" key="GridCell.Tab.0.bottom/0.0.1600.860@0.0.1600.860" timestamp="1617245991227" />
+    <state width="1557" height="222" key="GridCell.Tab.0.center" timestamp="1617245991227">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="222" key="GridCell.Tab.0.center/0.0.1600.860@0.0.1600.860" timestamp="1617065706108" />
-    <state width="1557" height="222" key="GridCell.Tab.0.left" timestamp="1617065706108">
+    <state width="1557" height="222" key="GridCell.Tab.0.center/0.0.1600.860@0.0.1600.860" timestamp="1617245991227" />
+    <state width="1557" height="222" key="GridCell.Tab.0.left" timestamp="1617245991227">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="222" key="GridCell.Tab.0.left/0.0.1600.860@0.0.1600.860" timestamp="1617065706108" />
-    <state width="1557" height="222" key="GridCell.Tab.0.right" timestamp="1617065706108">
+    <state width="1557" height="222" key="GridCell.Tab.0.left/0.0.1600.860@0.0.1600.860" timestamp="1617245991227" />
+    <state width="1557" height="222" key="GridCell.Tab.0.right" timestamp="1617245991227">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="222" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1617065706108" />
-    <state width="1557" height="276" key="GridCell.Tab.1.bottom" timestamp="1617064358624">
+    <state width="1557" height="222" key="GridCell.Tab.0.right/0.0.1600.860@0.0.1600.860" timestamp="1617245991227" />
+    <state width="1557" height="276" key="GridCell.Tab.1.bottom" timestamp="1617233372620">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="276" key="GridCell.Tab.1.bottom/0.0.1600.860@0.0.1600.860" timestamp="1617064358624" />
-    <state width="1557" height="276" key="GridCell.Tab.1.center" timestamp="1617064358624">
+    <state width="1557" height="276" key="GridCell.Tab.1.bottom/0.0.1600.860@0.0.1600.860" timestamp="1617233372620" />
+    <state width="1557" height="276" key="GridCell.Tab.1.center" timestamp="1617233372620">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="276" key="GridCell.Tab.1.center/0.0.1600.860@0.0.1600.860" timestamp="1617064358624" />
-    <state width="1557" height="276" key="GridCell.Tab.1.left" timestamp="1617064358623">
+    <state width="1557" height="276" key="GridCell.Tab.1.center/0.0.1600.860@0.0.1600.860" timestamp="1617233372620" />
+    <state width="1557" height="276" key="GridCell.Tab.1.left" timestamp="1617233372620">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="276" key="GridCell.Tab.1.left/0.0.1600.860@0.0.1600.860" timestamp="1617064358623" />
-    <state width="1557" height="276" key="GridCell.Tab.1.right" timestamp="1617064358624">
+    <state width="1557" height="276" key="GridCell.Tab.1.left/0.0.1600.860@0.0.1600.860" timestamp="1617233372620" />
+    <state width="1557" height="276" key="GridCell.Tab.1.right" timestamp="1617233372620">
       <screen x="0" y="0" width="1600" height="860" />
     </state>
-    <state width="1557" height="276" key="GridCell.Tab.1.right/0.0.1600.860@0.0.1600.860" timestamp="1617064358624" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main.py</url>
-          <line>26</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/kernel_perceptron.py</url>
-          <line>4</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/kernel_perceptron.py</url>
-          <line>33</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <state width="1557" height="276" key="GridCell.Tab.1.right/0.0.1600.860@0.0.1600.860" timestamp="1617233372620" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/mini_project2$main.coverage" NAME="main Coverage Results" MODIFIED="1617065706095" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/mini_project2$kernel_perceptron.coverage" NAME="kernel_perceptron Coverage Results" MODIFIED="1617130532943" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/mini_project2$kernel_perceptron_multiclass__1_.coverage" NAME="kernel_perceptron_multiclass (1) Coverage Results" MODIFIED="1617232625505" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/mini_project2$main.coverage" NAME="main Coverage Results" MODIFIED="1617245991211" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
