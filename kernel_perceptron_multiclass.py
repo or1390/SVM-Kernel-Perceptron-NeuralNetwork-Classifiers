@@ -75,6 +75,7 @@ class kernel_perceptron_multiclass:
         print("Finish 3")
         self.kernel_binary4 = kernel_perceptron_binary(0.01, 5, 100, 1)
         self.kernel_binary4.train(X_train,np.where(array_classifier_col4==0, -1, array_classifier_col4))
+        print("Finish 4")
 
 
 
@@ -101,15 +102,15 @@ class kernel_perceptron_multiclass:
             y_predicted.append(y_multiclass)
         return y_predicted
 
-    def score(self, X_test, y_test):
-        predictions = self.predict(X_test)
+    def score(self, X, y):
+        predictions = self.predict(X)
         num_of_correct_prediction = 0
-        for indx, y_i in enumerate(y_test):
-            print("test y ", y_i)
-            print("pred is ", predictions[indx])
+        for indx, y_i in enumerate(y):
+       #     print("test y ", y_i)
+        #    print("pred is ", predictions[indx])
             if predictions[indx] == y_i:
                 num_of_correct_prediction += 1
-        print("Correct pred", num_of_correct_prediction)
-        print("Length ", len(y_test))
-        accuracy = float(num_of_correct_prediction)/len(y_test)
+        #print("Correct pred", num_of_correct_prediction)
+        #print("Length ", len(y_test))
+        accuracy = float(num_of_correct_prediction)/len(y)
         return (accuracy)
