@@ -1,5 +1,5 @@
 import numpy as np
-
+from tqdm import tqdm
 
 
 
@@ -21,14 +21,20 @@ class kernel_perceptron_binary:
         self.X_train = X_train
 
         # loop through iterations
-        for i in range(self.iterations):
+        for i in tqdm(range(self.iterations)):
+            missclassification = 0
             # loop through instances in the training data
             for indx, x_i in enumerate(X_train):
                 # for each instance of the training data calculate the predicted label
                 y_predicted = self.predict(x_i)
                 # check condition to update alpha
                 if y_train[indx] * y_predicted <= 0:
+                    missclassification += 1
                     self.alpha[indx] += self.alpha[indx] + y_train[indx]
+            if missclassification < 7:
+                break
+
+
 
     ''''
     The predict function calculates the kernel for each instance 
@@ -46,14 +52,3 @@ class kernel_perceptron_binary:
         return -1
 
 
-    ''''
-    the test function is used to predict the label for the instances
-    in the testing dataset.    
-
-
-    def test(self, X_test):
-        output = []
-        for i, i_test in enumerate(X_test):
-            output.append(self.predict(i_test))
-        return output
-    '''''

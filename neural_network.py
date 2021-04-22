@@ -1,5 +1,5 @@
 import  numpy as np
-
+from tqdm import tqdm
 class neural_network():
     #initialize parameters
     def __init__(self, num_input, num_hidden, num_output, learning_rate, num_of_iterations):
@@ -41,6 +41,16 @@ class neural_network():
             error = np.sum((self.y_train[index] - item)**2 / 2)
         return error
 
+    def expected_label(self, expected):
+        e = []
+        for i in range(self.num_output):
+            if expected == i:
+                e.append(1)
+            else:
+                e.append(0)
+        return e
+
+
     '''
     This function is used to train the model using random weights and bias. 
     Then, it calculates the outputs and inputs of the layers by calling the forward propagation
@@ -52,25 +62,48 @@ class neural_network():
         n_samples, n_features = X_train.shape
 
         self.init_network_parameters(n_features)
-        for i in range(self.num_of_iterations):
-            hidden_layer = self.forward_propagation(self.X_train,self.weights_1, self.bias_1)
-            output_layer = self.forward_propagation(hidden_layer,self.weights_2, self.bias_2)
 
-            output_max = self.find_max(output_layer) # get the max value for each unit in the final layer.
-            print("Training label",output_max)
-            total_error = self.calculate_error_output(output_max)
-            print("Total error", total_error)
-         #   self.back_propagation(self.X_train,hidden_layer,output_max)
-    '''
+        for i in tqdm(range(self.num_of_iterations)):
+            for x_i, item in enumerate (self.X_train):
+                out_1 = self.forward_propagation(self.X_train[x_i], self.weights_1, self.bias_1)
+                hidden_predicted = self.sigmoid(out_1)
+                out_2 = self.forward_propagation(hidden_predicted, self.weights_2, self.bias_2)
+                output_predicted = self.sigmoid(out_2)
+                y_actual = self.expected_label(y_train[x_i])
+
+                output_layer_error =  output_predicted - y_actual
+                output_layer_delta = output_layer_error * output_predicted * (1 - output_predicted)
+
+                output_layer_delta = output_layer_delta.reshape(self.num_output,1)
+                hidden_predicted = hidden_predicted.reshape(1,self.num_hidden)
+
+
+                hidden_layer_error = np.dot(output_layer_delta,hidden_predicted)
+                hidden_layer_delta = hidden_predicted * (1 - hidden_predicted)
+                x = np.dot(self.weights_2, output_layer_delta)
+                x = x.reshape(1, self.num_hidden)
+                y = x * hidden_layer_delta
+                r = item.reshape(1,n_features)
+                d = np.dot(y.T, r)
+
+                self.weights_1 = self.weights_1 - self.learning_rate * d.T
+                self.weights_2 = self.weights_2 - self.learning_rate * hidden_layer_error.T
+
+    ''' 
     This function is used to for the test(unknown) dataset to predict the labels.
     '''
     def predict(self, X_test):
         self.X_test = X_test
-        self.init_network_parameters(self.num_input)
-        hidden_predicted = self.forward_propagation(self.X_test, self.weights_1, self.bias_1)
-        output_predicted = self.forward_propagation(hidden_predicted,self.weights_2,self.bias_2)
-        predicted = self.find_max(output_predicted)
-        print("Predicted is:", predicted)
+        predictions = []
+        for x_i, item in enumerate(X_test):
+            out_1 = self.forward_propagation(self.X_test[x_i], self.weights_1, self.bias_1)
+            hidden_predicted = self.sigmoid(out_1)
+            out_2 = self.forward_propagation(hidden_predicted,self.weights_2,self.bias_2)
+            output_predicted = self.sigmoid(out_2)
+           # print("pred is ", output_predicted)
+            predicted = self.find_max(output_predicted)
+            predictions.append(predicted)
+        return  predictions
 
     '''
     This function calculates the accuracy (score) in the testing dataset.
@@ -90,11 +123,7 @@ class neural_network():
     This function is used to get the maximum value for each unit in the final layer
     '''
     def find_max(self, output_layer):
-        label = []
-        for i, element in enumerate (output_layer):
-            output = np.argmax(output_layer[i])
-            label.append(output)
-        return  label
+        return np.argmax(output_layer, axis = 0)
 
     '''
     In the forward propagation, we calculate the output of each layer, and
@@ -102,60 +131,6 @@ class neural_network():
     '''
     def forward_propagation(self,X, weight, bias):
         net_h = np.dot(X,weight) + bias
-        output_with_activation = self.sigmoid(net_h)
-        return output_with_activation
-    '''
-    this function return a matrice with zeros and ones, which is used
-    in the backpropagation function
-    '''
-    def one_hot(self, y):
-        one_hot_output = np.zeros((self.y_train.size, self.y_train.max() + 1))
-        one_hot_output[np.arange(self.y_train.size), self.y_train] = 1
-        one_hot_output = one_hot_output.T
-        return one_hot_output
-
-    '''
-    ReLu is a activation function to return a positive number
-    if the input is a negative number
-    '''
-
-    def ReLU(self,Z):
-        return Z > 0
-
-    '''
-    This function is used to update weights and bias after with the corresponding values
-    which are obtained by the backpropragation algorithm.
-    '''
-    def update_parameters(self, dW1,db1,dW2,db2):
-        self.weights_1 = self.weights_1 -self.learning_rate * dW1
-        self.weights_2 = self.weights_2 - self.learning_rate * dW2
-        self.b1 = self.bias_1 - self.learning_rate * db1
-        self.b2 = self.bias_2 - self.learning_rate * db2
-
-    '''
-    Backpropagation starts from the final layer and uses the Chain Rule 
-    to compute the gradients.
-    
-    '''
-
-    def back_propagation(self, X, hidden_layer, output):
-        m= self.y_train.size
-        one_hot_Y = self.one_hot(self.y_train)
-        dZ2 = output - one_hot_Y
-        dW2 = 1 / m * dZ2.dot(hidden_layer)
-        db2 = 1 / m * np.sum(dZ2)
-        dZ1 = np.dot(self.weights_2,dZ2) * self.ReLU(X)
-        dW1 = 1 / m * dZ1.dot(X.T)
-        db1 = 1 / m * np.sum(dZ1)
-        return dW1, db1, dW2, db2
-        self.update_parameters(dW1, db1, dW2, db2)
-
-
-
-
-
-
-
-
-
+      #  output_with_activation = self.sigmoid(net_h)
+        return net_h
 

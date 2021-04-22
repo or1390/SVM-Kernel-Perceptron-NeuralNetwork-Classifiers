@@ -64,16 +64,16 @@ class kernel_perceptron_multiclass:
         array_classifier_col3 = output[:,2]
         array_classifier_col4 = output[:,3]
 
-        self.kernel_binary1 = kernel_perceptron_binary(0.01, 5, 100, 1)
+        self.kernel_binary1 = kernel_perceptron_binary(0.01, 5, self.iterations, 1)
         self.kernel_binary1.train(X_train, np.where(array_classifier_col1==0, -1, array_classifier_col1))
         print("Finish 1")
-        self.kernel_binary2 = kernel_perceptron_binary(0.01, 5, 100, 1)
+        self.kernel_binary2 = kernel_perceptron_binary(0.01, 5,self.iterations, 1)
         self.kernel_binary2.train(X_train, np.where(array_classifier_col2==0, -1, array_classifier_col2))
         print("Finish 2")
-        self.kernel_binary3 = kernel_perceptron_binary(0.01, 5, 100, 1)
+        self.kernel_binary3 = kernel_perceptron_binary(0.01, 5, self.iterations, 1)
         self.kernel_binary3.train(X_train,np.where(array_classifier_col3==0, -1, array_classifier_col3))
         print("Finish 3")
-        self.kernel_binary4 = kernel_perceptron_binary(0.01, 5, 100, 1)
+        self.kernel_binary4 = kernel_perceptron_binary(0.01, 5, self.iterations, 1)
         self.kernel_binary4.train(X_train,np.where(array_classifier_col4==0, -1, array_classifier_col4))
         print("Finish 4")
 
@@ -98,7 +98,8 @@ class kernel_perceptron_multiclass:
             binary_label = y_label.replace(" ", "")
             y_multiclass = self.binaryToDecimal(binary_label)
             # print("Y_multiclass " , y_multiclass)
-
+            if y_multiclass > 9:
+                y_multiclass = 9
             y_predicted.append(y_multiclass)
         return y_predicted
 

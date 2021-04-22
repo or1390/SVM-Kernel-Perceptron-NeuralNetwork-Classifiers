@@ -6,7 +6,7 @@ from SVM_binary import  support_vector_machine
 
 class SVM_multiclass:
 
-    def __init__(self, lambda_rate, num_of_iterations, num_of_classes,list_of_classes ):
+    def __init__(self, lambda_rate, num_of_iterations, num_of_classes):
         self.SVM_binary1 = None
         self.SVM_binary2 = None
         self.SVM_binary3 = None
@@ -16,7 +16,7 @@ class SVM_multiclass:
         self.lambda_rate = lambda_rate
         self.num_of_iterations = num_of_iterations
         self.num_of_classes = num_of_classes
-        self.list_of_classes = list_of_classes
+
 
     def decimal_to_binary(self, num):
         return "{0:04b}".format(int(num))
@@ -51,30 +51,23 @@ class SVM_multiclass:
             output.append(current)
 
         output = np.array(output)
-        # print("y train is ")
-        # print(y_train)
-        # print("binary is ")
-        # print(output)
         array_classifier_col1 = output[:, 0]
         array_classifier_col2 = output[:, 1]
         array_classifier_col3 = output[:, 2]
         array_classifier_col4 = output[:, 3]
 
-        self.SVM_binary1 = support_vector_machine(self.lambda_rate, self.num_of_iterations, self.list_of_classes)
+        self.SVM_binary1 = support_vector_machine(self.lambda_rate, self.num_of_iterations)
         self.SVM_binary1.train(X_train, np.where(array_classifier_col1 == 0, -1, array_classifier_col1))
         print("Finish 1")
-        self.SVM_binary2 = support_vector_machine(self.lambda_rate, self.num_of_iterations, self.list_of_classes)
+        self.SVM_binary2 = support_vector_machine(self.lambda_rate, self.num_of_iterations)
         self.SVM_binary2.train(X_train, np.where(array_classifier_col2 == 0, -1, array_classifier_col2))
         print("Finish 2")
-        self.SVM_binary3 = support_vector_machine(self.lambda_rate, self.num_of_iterations, self.list_of_classes)
+        self.SVM_binary3 = support_vector_machine(self.lambda_rate, self.num_of_iterations)
         self.SVM_binary3.train(X_train, np.where(array_classifier_col3 == 0, -1, array_classifier_col3))
         print("Finish 3")
-        self.SVM_binary4 = support_vector_machine(self.lambda_rate, self.num_of_iterations, self.list_of_classes)
+        self.SVM_binary4 = support_vector_machine(self.lambda_rate, self.num_of_iterations)
         self.SVM_binary4.train(X_train, np.where(array_classifier_col4 == 0, -1, array_classifier_col4))
         print("Finish 4")
-        # score = self.score(self.X_train, self.y_train)
-
-
 
     def predict(self, X):
         self.X = X
@@ -90,47 +83,23 @@ class SVM_multiclass:
             y_label.append(y_label_2)
             y_label.append(y_label_3)
             y_label.append(y_label_4)
-            # print(y_label)
+
             binary_list = ''.join([str(elem) for elem in y_label])
             y_label = str.replace(binary_list, "-1", "0")
             binary_label = y_label.replace(" ", "")
             y_multiclass = self.binaryToDecimal(binary_label)
-            # print(y_multiclass)
-            # print("Y_multiclass " , y_multiclass)
-
+            if y_multiclass > 9:
+                y_multiclass = 9
             y_predicted.append(y_multiclass)
         return y_predicted
 
     def score(self, X, y):
         predictions = self.predict(X)
-        # print(predictions)
-        # predictions_max = max(predictions)
-
         num_of_correct_prediction = 0
         for indx, y_i in enumerate(y):
-            # print("test y ", y_i)
-            # print("pred is ", predictions[indx])
             if predictions[indx] == y_i:
                 num_of_correct_prediction += 1
 
-        # print("Correct pred", num_of_correct_prediction)
-        # print("Length ", len(y))
         accuracy = float(num_of_correct_prediction) / len(y)
         return (accuracy)
 
-    def confusion_matrix(predicted, actual):
-        # confusion matrix
-        confusion_array= [[0, 0], [0, 0]]
-        for i in range(len(predicted)):
-            if int(actual[i]) == 1:
-                if float(predicted[i]) < 0.5:
-                    confusion_array[0][1] = confusion_array[0][1] + 1
-                else:
-                    confusion_array[0][0] = confusion_array[0][0] + 1
-            elif int(actual[i]) == 2:
-                if float(predicted[i]) >= 0.5:
-                    confusion_array[1][0] = confusion_array[1][0] + 1
-                else:
-                    confusion_array[1][1] = confusion_array[1][1] + 1
-
-        accuracy = float(confusion_array[0][0] + confusion_array[1][1]) / (len(actual))
