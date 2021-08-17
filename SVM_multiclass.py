@@ -5,7 +5,9 @@ from SVM_binary import  support_vector_machine
 
 
 class SVM_multiclass:
-
+    '''
+    Parameters' Initialization
+    '''
     def __init__(self, lambda_rate, num_of_iterations, num_of_classes):
         self.SVM_binary1 = None
         self.SVM_binary2 = None
@@ -17,14 +19,22 @@ class SVM_multiclass:
         self.num_of_iterations = num_of_iterations
         self.num_of_classes = num_of_classes
 
-
+    '''
+    decimal to binary conversion
+    '''
     def decimal_to_binary(self, num):
         return "{0:04b}".format(int(num))
-
+    '''
+    binary to decimal conversion
+    '''
     def binaryToDecimal(self, binary):
         decimal = int(binary, 2)
         return (decimal)
 
+    '''
+    this function calculates the number of necessary classifiers 
+    to handle n-multiclass classification problem
+    '''
     def min_num_bits_to_encode_number(self, dec_number):
         dec_number = dec_number + 1  # adjust by 1 for special cases
         # log of zero is undefined
@@ -32,7 +42,9 @@ class SVM_multiclass:
             return 0
         dec_number = int(ceil(log(dec_number, 2)))  # logbase2 is available
         return (dec_number)
-
+    '''
+    this is a crucial function which is used to train the model
+    '''
 
     def train(self, X_train, y_train):
         self.X_train = X_train
@@ -51,11 +63,13 @@ class SVM_multiclass:
             output.append(current)
 
         output = np.array(output)
-        array_classifier_col1 = output[:, 0]
-        array_classifier_col2 = output[:, 1]
-        array_classifier_col3 = output[:, 2]
-        array_classifier_col4 = output[:, 3]
-
+        array_classifier_col1 = output[:, 0] # classifier 1
+        array_classifier_col2 = output[:, 1] # classifier 2
+        array_classifier_col3 = output[:, 2] # classifier 3
+        array_classifier_col4 = output[:, 3] # classifier 4
+        '''
+        for each classifier we call the SVM binary and flip 0 with -1
+        '''
         self.SVM_binary1 = support_vector_machine(self.lambda_rate, self.num_of_iterations)
         self.SVM_binary1.train(X_train, np.where(array_classifier_col1 == 0, -1, array_classifier_col1))
         print("Finish 1")
@@ -88,11 +102,15 @@ class SVM_multiclass:
             y_label = str.replace(binary_list, "-1", "0")
             binary_label = y_label.replace(" ", "")
             y_multiclass = self.binaryToDecimal(binary_label)
+            #to manage the cases when the conversion from binary to decimal is greater than the number of
+            #multiple classes , we consider the highest value
             if y_multiclass > 9:
                 y_multiclass = 9
             y_predicted.append(y_multiclass)
         return y_predicted
-
+    '''
+    this function evaluates the number of correct predictions, the accuracy
+    '''
     def score(self, X, y):
         predictions = self.predict(X)
         num_of_correct_prediction = 0

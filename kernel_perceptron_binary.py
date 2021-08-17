@@ -31,7 +31,7 @@ class kernel_perceptron_binary:
                 if y_train[indx] * y_predicted <= 0:
                     missclassification += 1
                     self.alpha[indx] += self.alpha[indx] + y_train[indx]
-            if missclassification < 7:
+            if missclassification < 7:# to avoid overfitting
                 break
 
 
@@ -46,7 +46,6 @@ class kernel_perceptron_binary:
         for i, x_i in enumerate (self.X_train):
             kernel = (self.a + self.b_learning_rate * np.dot(x_i, sample)) ** self.d_degree
             sum_value += self.alpha[i] * kernel
-            #print(sum)
         if sum_value > 1:
             return 1
         return -1

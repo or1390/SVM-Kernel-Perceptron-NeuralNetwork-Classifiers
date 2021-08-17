@@ -6,7 +6,9 @@ from kernel_perceptron_binary import kernel_perceptron_binary
 
 
 class kernel_perceptron_multiclass:
-    # parameters initialization
+    '''
+    Parameters' Initialization
+    '''
     def __init__(self, b_learning_rate, d_degree, iterations, a, num_of_classes):
         self.b_learning_rate = b_learning_rate
         self.iterations = iterations
@@ -22,14 +24,23 @@ class kernel_perceptron_multiclass:
         self.X_train = None
         self.y_train = None
 
-
+    '''
+       decimal to binary conversion
+    '''
     def decimal_to_binary(self, num):
         return "{0:04b}".format(int(num))
 
+    '''
+        binary to decimal conversion
+    '''
     def binaryToDecimal(self,binary):
         decimal = int(binary,2)
         return (decimal)
 
+    '''
+       this function calculates the number of necessary classifiers 
+       to handle n-multiclass classification problem
+       '''
     def min_num_bits_to_encode_number(self,dec_number):
         dec_number = dec_number + 1  # adjust by 1 for special cases
         # log of zero is undefined
@@ -38,6 +49,9 @@ class kernel_perceptron_multiclass:
         dec_number = int(ceil(log(dec_number, 2)))  # logbase2 is available
         return (dec_number)
 
+    '''
+       this is a crucial function which is used to train the model
+    '''
 
     def train(self, X_train, y_train):
         self.X_train = X_train
@@ -59,21 +73,24 @@ class kernel_perceptron_multiclass:
             output.append(current)
 
         output = np.array(output)
-        array_classifier_col1 = output[:,0]
-        array_classifier_col2 = output[:,1]
-        array_classifier_col3 = output[:,2]
-        array_classifier_col4 = output[:,3]
+        array_classifier_col1 = output[:,0] # classifier 1
+        array_classifier_col2 = output[:,1] # classifier 2
+        array_classifier_col3 = output[:,2] # classifier 3
+        array_classifier_col4 = output[:,3] # classifier 4
 
-        self.kernel_binary1 = kernel_perceptron_binary(0.01, 5, self.iterations, 1)
+        '''
+        for each classifier we call the SVM binary and flip 0 with -1
+        '''
+        self.kernel_binary1 = kernel_perceptron_binary(self.b_learning_rate, self.d_degree, self.iterations, self.a)
         self.kernel_binary1.train(X_train, np.where(array_classifier_col1==0, -1, array_classifier_col1))
         print("Finish 1")
-        self.kernel_binary2 = kernel_perceptron_binary(0.01, 5,self.iterations, 1)
+        self.kernel_binary2 = kernel_perceptron_binary(self.b_learning_rate, self.d_degree,self.iterations, self.a)
         self.kernel_binary2.train(X_train, np.where(array_classifier_col2==0, -1, array_classifier_col2))
         print("Finish 2")
-        self.kernel_binary3 = kernel_perceptron_binary(0.01, 5, self.iterations, 1)
+        self.kernel_binary3 = kernel_perceptron_binary(self.b_learning_rate, self.d_degree, self.iterations, self.a)
         self.kernel_binary3.train(X_train,np.where(array_classifier_col3==0, -1, array_classifier_col3))
         print("Finish 3")
-        self.kernel_binary4 = kernel_perceptron_binary(0.01, 5, self.iterations, 1)
+        self.kernel_binary4 = kernel_perceptron_binary(self.b_learning_rate, self.d_degree, self.iterations, self.a)
         self.kernel_binary4.train(X_train,np.where(array_classifier_col4==0, -1, array_classifier_col4))
         print("Finish 4")
 
@@ -97,21 +114,20 @@ class kernel_perceptron_multiclass:
             y_label = str.replace(binary_list, "-1"," 0")
             binary_label = y_label.replace(" ", "")
             y_multiclass = self.binaryToDecimal(binary_label)
-            # print("Y_multiclass " , y_multiclass)
             if y_multiclass > 9:
                 y_multiclass = 9
             y_predicted.append(y_multiclass)
         return y_predicted
 
+    '''
+     this function evaluates the number of correct predictions, the accuracy
+    '''
     def score(self, X, y):
         predictions = self.predict(X)
         num_of_correct_prediction = 0
         for indx, y_i in enumerate(y):
-       #     print("test y ", y_i)
-        #    print("pred is ", predictions[indx])
-            if predictions[indx] == y_i:
+           if predictions[indx] == y_i:
                 num_of_correct_prediction += 1
-        #print("Correct pred", num_of_correct_prediction)
-        #print("Length ", len(y_test))
+
         accuracy = float(num_of_correct_prediction)/len(y)
         return (accuracy)
