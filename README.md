@@ -1,4 +1,4 @@
-# Mini-Project 2 - kNN and Perception algorithms
+# Mini-Project 2 - Neulral Network, Support Vector Machine and Kernel Perception algorithms
 #### This project consists on implementation of three algorithms: Neural Network, Support Vector Machine and Kernel Perception.
 #### The dataset used to train and test the models is MNIST. 
 
